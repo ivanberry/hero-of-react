@@ -1,17 +1,30 @@
 import React, { Component } from 'react';
+import { PostItem } from './PostItem';
+
+const data = [
+  { title: 'TT', author: 'tab', date: '2011111' },
+  { title: 'TT', author: 'tab', date: '2011111' },
+  { title: 'TT', author: 'tab', date: '2011111' }
+];
 
 class PostList extends Component {
-    render() {
-      return (
-        <div>
-          帖子列表：
+  render() {
+    return (
+      <div>
+        帖子列表：
           <ul>
-            <li>大家一起讨论React吧！</li>
-            <li>amy是个乖宝宝哟！</li>
-          </ul>
-        </div>
-      )
-    }
+          {data.map(
+            item =>
+              <PostItem
+                title={item.title}
+                author={item.author}
+                date={item.date}
+              />
+          )}
+        </ul>
+      </div>
+    )
   }
+}
 
-  export default PostList;
+export default PostList;
