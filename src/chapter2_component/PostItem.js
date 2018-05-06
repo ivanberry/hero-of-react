@@ -25,6 +25,7 @@ export class PostItem extends Component {
         <div>创建时间: {date}</div>
         <div>
           <button onClick={() => this.handleChile()}>点赞</button>
+          &nbsp;
           <span>{this.state.vote}</span>
           </div>
       </li>
