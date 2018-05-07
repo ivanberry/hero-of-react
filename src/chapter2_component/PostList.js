@@ -1,24 +1,58 @@
 import React, { Component } from 'react';
-import { PostItem } from './PostItem';
+import PostItem from './PostItem';
 
 const data = [
-  { title: 'TT', author: 'tab', date: '2011111' },
-  { title: 'TT', author: 'tab', date: '2011111' },
-  { title: 'TT', author: 'tab', date: '2011111' }
+  {id: 0, title: 'TT', author: 'tab', date: '2011111', vote: 0 },
+  {id: 1, title: 'TT', author: 'tab', date: '2011111', vote: 0 },
+  {id: 2, title: 'TT', author: 'tab', date: '2011111', vote: 0 }
 ];
 
 class PostList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posts: []
+    };
+    this.timer = null;
+    this.handleVote = this.handleVote.bind(this);
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => {
+      console.log('loading data');
+      this.setState({
+        posts: data
+      });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+  }
+
+  handleVote(id) {
+    const posts = this.state.posts.map(item => {
+      const newItem = item.id === id ? { ...item, vote: ++item.vote } : item;
+      return newItem;
+    });
+    this.setState({
+      posts
+    });
+  }
+
   render() {
     return (
       <div>
         帖子列表：
           <ul>
-          {data.map(
+          {this.state.posts.map(
             item =>
               <PostItem
-                title={item.title}
-                author={item.author}
-                date={item.date}
+                post={item}
+                onVote={this.handleVote}
+                key={`post_${item.id}`}
               />
           )}
         </ul>
