@@ -30,3 +30,37 @@ React的最大特点之一就是组件化，所以我们在React组件设计之�
 - 每个PostItem组件都维护一个vote状态，但除了vote以外，帖子的其他信息都保存在PostList组件中，这显然是不合理的。
 
 我们尝试重新设计这两个组件，使PostItem称为无状态组件，而PostList为有状态组件。
+
+主要的修改：
+
+- 帖子的列表数据定义为PostLit的一个内部状态。
+- `componentDidMount`生命周期函数中利用`setTimeout`模拟后台请求数据，继而使用`this.setState`的唯一方法更新UI。
+- 将帖子所有属性合并，并通过状态组件PostList传递到PostItem组件，使得PostItem组件称为纯粹的渲染组件。
+- 在PostList组件中定义`handleVote`，处理点赞逻辑，并将该方法通过props传递给PostItem。
+- PostItem定义为函数组件，根据PostList传递的post属性渲染UI，当发生点赞行为时，通过`porps.onVote`方法将点赞逻辑交给PostList中的`handleVote`处理。
+
+这样的修改后，我们组件分工明确，PostItem只管如何UI，不需要维护自身的状态，至于数据来源和点赞的逻辑该如何处理，它并不需要关心，解决耦合更加彻底，复用更容易。
+
+## 属性校验和默认属性
+
+利用`props-types`库提供`props`类型的规定，其中对象和数组可以使用更细节的`shape`和`arrayOf`:
+
+```javascript
+style: PropTypes.shape({
+  color: PropTypes.string,
+  fontSize: PropTypes.number
+}).isrequired,
+sequence: PropTypes.arrayOf(PropTypes.number)
+```
+React中通过组件的defaultProps提供默认的属性值：
+
+```javascript
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+Welcome.defaultProps = {
+  name: 'tab'
+};
+```
+
