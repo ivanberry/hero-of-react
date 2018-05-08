@@ -64,3 +64,53 @@ Welcome.defaultProps = {
 };
 ```
 
+## 组件和元素
+
+React元素很简单，就是一个JavaScript对象，通过JSX语言描述，最后经过`React.createElement`生成为原生对象。
+
+```javascript
+//组件Hello,world
+const Hello = <div className='hello'><span>Hello</span>, world</div>;
+
+//React元素
+Hello === {
+  type: 'div',
+  props: {
+    className: 'hello'
+  },
+  children: [{
+    type: 'span',
+    props: null,
+    children: null
+  },
+  ', world'
+  ]
+};
+```
+
+组件是一个class或函数，返回React元素。
+
+## 组件的生命周期
+
+整体而言，React组件的生命周期分为三个时期: Mounting, Updating, Umounting。
+
+### Mounting
+
+- `constructor`: 组件创建时首先调用构造方法，接受props参数，为父组件中传入的属性对象，~~必须在调用了`super(props)`后才能保证`props`被传入组件中~~，必须调用了`super(props)`后才能保证在构造函数中访问`props`(**对原书存疑$$)。
+
+- `componentWillMount`: 组件挂载到DOM前调用，且只会被执行一次，很少使用。
+
+- `render`: 即JSX描述UI，它不负责实际的渲染工作，只是返回UI描述，`render`是一个纯函数，不能存在任何具有副作用的函数调用，所有`setState`函数不能再`render`中调用。
+
+- `componentDidMount`: 组件挂载到DOM后调用，且只会调用一次，因组件已完成挂载，对DOM的操作可以放在这个方法中，也多用于向服务器拉取数据。
+
+### Upating
+
+
+
+
+
+
+
+
+
