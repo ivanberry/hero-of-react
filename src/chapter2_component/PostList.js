@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PostItem from './PostItem';
+import './PostList.css';
 
 const data = [
   {id: 0, title: 'TT', author: 'tab', date: '2011111', vote: 0 },
@@ -44,7 +45,7 @@ class PostList extends Component {
 
   render() {
     return (
-      <div>
+      <div className='container'>
         帖子列表：
           <ul>
           {this.state.posts.map(
